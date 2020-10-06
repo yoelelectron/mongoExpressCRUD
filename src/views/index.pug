@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title= title
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous")
+    body
+        .container
+            h1= message
+
+            form(action="/add", method="post")
+                legend Add a task
+                .form-group
+                    input(type="text", id="title" class="form-control" name="title" placeholder="Add a title")
+                .form-group 
+                    textarea(name="description", cols="40", rows="2" class="form-control" placeholder="Add a description")
+                button(type="submit" class= "btn btn-success") Add
+
+            form
+            hr
+            table.table.table-dark.table-hover
+                thead
+                    tr
+                        th Id
+                        th Title
+                        th Description
+                        th Operation
+                
+                each _, i in tasks
+                    tr
+                        td= i +1
+                        td= tasks[i].title
+                        td= tasks[i].description
+                        td
+                            - var dlink = tasks[i]._id
+                            - var dstatus = tasks[i].status
+                            //a(class= dstatus + "? btn btn-success : btn btn-warning" type="button" href="/turn/"+dlink) Done
+                            - if (dstatus === true) {
+                                a(class="btn btn-success" type="button" href="/turn/"+dlink) Done
+                            - } else {
+                                a(class="btn btn-warning" type="button" href="/turn/"+dlink) Done
+                            - }
+                            a(class="btn btn-danger" type="button" href="/delete/"+dlink id="delete") Delete
+
+        script(src="../Javascripts/scripts.js")
